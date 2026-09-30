@@ -89,7 +89,7 @@ class LayoutAuditTest extends TestCase
     public function test_public_routes_respond_with_200_and_contain_vite_assets(): void
     {
         $publicRoutes = [
-            '/' => 'Maju Bersama',
+            '/' => 'Sumber Makmur Jaya',
             '/login' => 'Masuk',
         ];
 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Gudang | Maju Bersama ERP</title>
-    <meta name="description" content="Form penambahan gudang baru pada cabang toko Maju Bersama ERP.">
+    <title>Tambah Gudang | Sumber Makmur Jaya ERP</title>
+    <meta name="description" content="Form penambahan gudang baru pada cabang toko Sumber Makmur Jaya ERP.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -15,7 +15,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div>
                 <a href="/backoffice">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Multi Gudang</h1>
                 </a>
             </div>
@@ -71,7 +71,7 @@
                         <h2 class="text-lg font-bold text-slate-900">Tambah Gudang Baru</h2>
                         <p class="text-xs text-slate-500">
                             @if ($isMaster)
-                                Tambahkan gudang baru ke cabang mana pun dalam jaringan Maju Bersama.
+                                Tambahkan gudang baru ke cabang mana pun dalam jaringan Sumber Makmur Jaya.
                             @else
                                 Tambahkan gudang baru untuk cabang <strong>{{ $currentUser->branch->name }}</strong>.<br>
                                 Contoh: <span class="font-mono">Etalase Depan</span>, <span class="font-mono">Gudang Belakang</span>, <span class="font-mono">Laci Kasir</span>.

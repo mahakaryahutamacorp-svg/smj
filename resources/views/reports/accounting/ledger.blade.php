@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buku Besar (General Ledger) | Maju Bersama ERP</title>
+    <title>Buku Besar (General Ledger) | Sumber Makmur Jaya ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -55,7 +55,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Akuntansi &amp; Keuangan</h1>
                 </a>
             </div>

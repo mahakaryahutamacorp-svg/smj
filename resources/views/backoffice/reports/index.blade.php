@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pusat Laporan (Report Center) | Maju Bersama ERP</title>
+    <title>Pusat Laporan (Report Center) | Sumber Makmur Jaya ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -16,12 +16,12 @@
     </style>
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased flex flex-col">
-    <!-- Header Utama (Sesuai Standar Maju Bersama ERP) -->
+    <!-- Header Utama (Sesuai Standar Sumber Makmur Jaya ERP) -->
     <header class="border-b border-slate-800 bg-slate-950 text-white shrink-0">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block group">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Sumber Makmur Jaya ERP</p>
                     <div class="flex items-center gap-2">
                         <h1 class="text-xl font-bold tracking-tight">Pusat Laporan</h1>
                         <span class="rounded-md bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold text-amber-300 border border-amber-400/30">Report Center v1</span>
@@ -206,7 +206,7 @@
 
                 <!-- Footer Kolom Kiri -->
                 <div class="p-4 border-t border-slate-800/80 bg-slate-950/40 text-[11px] text-slate-400 flex items-center justify-between">
-                    <span>Maju Bersama Architecture</span>
+                    <span>Sumber Makmur Jaya Architecture</span>
                     <span class="font-mono text-amber-400/80">ERP 2026</span>
                 </div>
             </aside>
@@ -773,7 +773,7 @@
                         <span>Tahap 1: Cangkang Antarmuka Navigasi Tab Selesai</span>
                     </div>
                     <div class="flex items-center gap-3">
-                        <span class="font-mono text-slate-400">Pusat Laporan &bull; Maju Bersama POS-Accounting</span>
+                        <span class="font-mono text-slate-400">Pusat Laporan &bull; Sumber Makmur Jaya POS-Accounting</span>
                     </div>
                 </div>
             </section>

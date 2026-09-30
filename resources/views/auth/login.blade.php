@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk | Maju Bersama POS &amp; Akuntansi</title>
+    <title>Masuk | Sumber Makmur Jaya POS &amp; Akuntansi</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-900 antialiased">
@@ -11,7 +11,7 @@
         <div class="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-2xl lg:grid-cols-[1.05fr_0.95fr]">
             <section class="hidden bg-sky-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-sky-200">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-sky-200">Sumber Makmur Jaya ERP</p>
                     <h1 class="mt-8 max-w-md text-5xl font-bold leading-tight">Satu ruang kerja untuk pusat dan seluruh cabang.</h1>
                 </div>
                 <div class="border-t border-sky-500 pt-6 text-sm text-sky-100">
@@ -20,7 +20,7 @@
             </section>
 
             <section class="p-8 sm:p-12">
-                <a href="/" class="text-sm font-semibold text-sky-700 hover:text-sky-800">&larr; Beranda Maju Bersama ERP</a>
+                <a href="/" class="text-sm font-semibold text-sky-700 hover:text-sky-800">&larr; Beranda Sumber Makmur Jaya ERP</a>
                 <div class="mt-12">
                     <p class="text-sm font-medium text-amber-600">Akses Sistem</p>
                     <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Masuk ke aplikasi</h2>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk #{{ $sale->receipt_number }} | Maju Bersama POS</title>
+    <title>Struk #{{ $sale->receipt_number }} | Sumber Makmur Jaya POS</title>
     <style>
         * {
             box-sizing: border-box;
@@ -130,7 +130,7 @@
     <div class="receipt-container">
         <!-- Header Toko & Cabang -->
         <div class="text-center">
-            <h1 class="shop-title uppercase">MAJU BERSAMA</h1>
+            <h1 class="shop-title uppercase">SUMBER MAKMUR JAYA</h1>
             <p class="font-bold">{{ $sale->branch?->name ?? 'CABANG PUSAT' }}</p>
             <p style="font-size: 10px;">{{ $sale->branch?->address ?? 'Jl. Operasional Toko' }}</p>
             @if ($sale->branch?->phone)

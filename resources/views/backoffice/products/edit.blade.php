@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Produk - {{ $product->name }} | Maju Bersama ERP</title>
+    <title>Edit Produk - {{ $product->name }} | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
@@ -12,7 +12,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Manajemen Master Data</h1>
                 </a>
             </div>

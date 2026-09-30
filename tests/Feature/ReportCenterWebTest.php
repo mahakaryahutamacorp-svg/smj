@@ -103,7 +103,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laba Rugi Standar');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Pendapatan Usaha (Revenue)');
         $response->assertSee('Harga Pokok Penjualan (COGS)');
         $response->assertSee('Laba Kotor (Gross Profit)');
@@ -195,7 +195,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Neraca Saldo (Trial Balance)');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('SEIMBANG');
         $response->assertSee('500.000,00');
         $response->assertSee('window.print()', false);
@@ -238,7 +238,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Neraca Standar (Balance Sheet)');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('TOTAL AKTIVA (ASSETS)');
         $response->assertSee('TOTAL KEWAJIBAN &amp; EKUITAS', false);
         $response->assertSee('Laba Bersih Periode Berjalan');
@@ -269,7 +269,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laporan Arus Kas (Cash Flow)');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Total Penerimaan Kas');
         $response->assertSee('Total Pengeluaran Kas');
         $response->assertSee('750.000,00');
@@ -323,7 +323,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laporan Penjualan');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('POS-20260923-0001');
         $response->assertSee('40.000,00');
         $response->assertSee('Pelanggan Umum (Walk-in)');
@@ -371,7 +371,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laporan Pembelian');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('PO-2026-0099');
         $response->assertSee('PT Petrokimia Sentosa');
         $response->assertSee('250.000,00');
@@ -404,7 +404,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Kartu Stok &amp; Mutasi Barang', false);
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Insektisida Regent 50ml');
         $response->assertSee('OBT-001');
     }
@@ -415,7 +415,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Daftar Aktiva Tetap &amp; Inventaris', false);
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Modul Harta Tetap &amp; Depresiasi Terproteksi', false);
         $response->assertSee('Belum ada aset tetap yang tercatat');
     }
@@ -504,7 +504,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laporan Umur Piutang (AR Aging)');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Kelompok Tani Makmur Sentosa');
         $response->assertSee('Toko Subur Tani');
         $response->assertSee('Total Keseluruhan');
@@ -601,7 +601,7 @@ class ReportCenterWebTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laporan Umur Hutang (AP Aging)');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('PT Petrokimia Kayaku');
         $response->assertSee('CV Benih Unggul Nusantara');
         $response->assertSee('Total Keseluruhan');

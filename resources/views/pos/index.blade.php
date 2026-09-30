@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="pos-token" content="{{ $previewToken }}">
-    <title>Penjualan Kasir | Maju Bersama ERP</title>
+    <title>Penjualan Kasir | Sumber Makmur Jaya ERP</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#020617">
     <style>
@@ -26,7 +26,7 @@
             <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5 lg:px-8">
                 <div class="flex items-center gap-3">
                     <a href="/backoffice" class="block">
-                        <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                        <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                         <h1 class="text-lg font-bold tracking-tight flex items-center gap-2">
                             <span>Kasir POS Multi-Store</span>
                             <span class="rounded bg-sky-500/20 px-2 py-0.5 text-xs text-sky-300 font-mono">{{ $currentUser->branch?->name ?? 'Cabang Pusat' }}</span>
@@ -1851,7 +1851,7 @@
 
         // Inisialisasi Database Offline Dexie
         if (typeof Dexie !== 'undefined') {
-            window.posDB = new Dexie('MajuBersamaPOS');
+            window.posDB = new Dexie('Sumber Makmur Jaya POS');
             window.posDB.version(1).stores({
                 sync_queue: '++id, payload, status, created_at'
             });

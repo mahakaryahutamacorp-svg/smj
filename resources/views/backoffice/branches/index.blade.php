@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Cabang Toko | Maju Bersama ERP</title>
+    <title>Manajemen Cabang Toko | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
@@ -12,7 +12,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Manajemen Master Data</h1>
                 </a>
             </div>
@@ -97,7 +97,7 @@
         <!-- Branches Table -->
         <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                <h2 class="font-bold text-slate-900">Jaringan Cabang Toko Maju Bersama</h2>
+                <h2 class="font-bold text-slate-900">Jaringan Cabang Toko Sumber Makmur Jaya</h2>
                 <span class="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">Total: {{ $branches->total() }} cabang</span>
             </div>
 

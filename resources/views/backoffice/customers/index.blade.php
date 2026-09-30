@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pelanggan | Maju Bersama ERP</title>
+    <title>Daftar Pelanggan | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -13,7 +13,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
             <div class="flex items-center gap-3">
                 <a href="/backoffice" class="block group">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Maju Bersama ERP</p>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Sumber Makmur Jaya ERP</p>
                     <div class="flex items-center gap-2">
                         <h1 class="text-base font-bold tracking-tight">Manajemen Pelanggan &amp; Multi-Price</h1>
                     </div>

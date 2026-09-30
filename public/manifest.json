@@ -1,6 +1,6 @@
 {
-    "name": "Maju Bersama POS",
-    "short_name": "POS Kasir",
+    "name": "Sumber Makmur Jaya POS",
+    "short_name": "SMJ POS",
     "start_url": "/pos",
     "display": "standalone",
     "background_color": "#020617",

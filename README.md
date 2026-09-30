@@ -35,7 +35,7 @@ Konfigurasi default menggunakan SQLite untuk pengembangan lokal. Untuk MySQL/Pos
 
 ## Deploy ke Hostinger
 
-Repository GitHub: `https://github.com/mahakaryahutamacorp-svg/maju-bersama`
+Repository GitHub: `<URL_GITHUB_BARU>`
 
 Konfigurasi SSH Hostinger:
 

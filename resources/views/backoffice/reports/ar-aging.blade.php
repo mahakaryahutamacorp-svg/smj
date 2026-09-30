@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Umur Piutang (AR Aging) | Maju Bersama ERP</title>
+    <title>Laporan Umur Piutang (AR Aging) | Sumber Makmur Jaya ERP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
             <div class="flex items-center gap-3">
                 <a href="/backoffice" class="block group">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Maju Bersama ERP</p>
+                    <p class="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-400 group-hover:text-amber-300 transition">Sumber Makmur Jaya ERP</p>
                     <div class="flex items-center gap-2">
                         <h1 class="text-base font-bold tracking-tight">Pusat Laporan</h1>
                         <span class="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-300">AR Aging</span>
@@ -106,12 +106,12 @@
     <main class="flex-1 mx-auto w-full max-w-7xl p-4 sm:p-6 lg:p-8 flex flex-col justify-start">
         <div class="print-container rounded-2xl border border-slate-300 bg-white shadow-lg p-6 sm:p-8 lg:p-10 text-slate-900">
             
-            <!-- KOP PERUSAHAAN (MAJU BERSAMA GRUP) -->
+            <!-- KOP PERUSAHAAN (Sumber Makmur Jaya GRUP) -->
             <header class="border-b-2 border-slate-900 pb-5 mb-6">
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     <div>
                         <p class="text-xs font-bold tracking-[0.2em] text-amber-600 uppercase">Sistem Pengelolaan Piutang Usaha (Account Receivable)</p>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 uppercase mt-0.5">MAJU BERSAMA GRUP</h1>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 uppercase mt-0.5">Sumber Makmur Jaya GRUP</h1>
                         <p class="text-xs text-slate-500 mt-1">Multi-Store Agriculture &amp; FMCG Retail Network</p>
                     </div>
                     <div class="sm:text-right">

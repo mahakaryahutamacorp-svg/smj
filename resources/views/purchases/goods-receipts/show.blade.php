@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slip Penerimaan Barang #{{ $receipt->reference_number }} | Maju Bersama ERP</title>
+    <title>Slip Penerimaan Barang #{{ $receipt->reference_number }} | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media print {
@@ -19,7 +19,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Pengadaan &amp; Persediaan</h1>
                 </a>
             </div>
@@ -84,7 +84,7 @@
             <div class="border-b border-slate-200 bg-slate-950 p-8 text-white">
                 <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-[0.24em] text-amber-400">Maju Bersama Multistore ERP</p>
+                        <p class="text-xs font-bold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya Multistore ERP</p>
                         <h2 class="mt-1 text-2xl font-black tracking-tight sm:text-3xl">BUKTI PENERIMAAN BARANG</h2>
                         <p class="text-xs text-slate-400 mt-1">GUDANG PUSAT (GOODS RECEIPT SLIP)</p>
                     </div>

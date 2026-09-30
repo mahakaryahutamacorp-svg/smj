@@ -97,7 +97,7 @@ class StockTransferPrintTest extends TestCase
 
         // 1. Kop Surat & Judul & Profil Perusahaan
         $response->assertSee('SURAT JALAN / DELIVERY NOTE');
-        $response->assertSee('MAJU BERSAMA GRUP');
+        $response->assertSee('Sumber Makmur Jaya GRUP');
         $response->assertSee('Jl. Nusa Indah Ujung BK 9, OKU Timur, Belitang, Sumatera Selatan');
         $response->assertSee('085198548662');
 
@@ -129,7 +129,7 @@ class StockTransferPrintTest extends TestCase
         $response->assertSee('Diterima Oleh (Cabang Tujuan)');
 
         // 7. Footer Identitas Aplikasi
-        $response->assertSee('maju bersama abi - 2029 | supported by rocellgadget');
+        $response->assertSee('Sumber Makmur Jaya abi - 2029 | supported by rocellgadget');
 
         // 8. Script Cetak Otomatis
         $response->assertSee('window.print()');

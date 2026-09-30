@@ -18,7 +18,7 @@ class PosPwaTest extends TestCase
 
         $json = json_decode(file_get_contents($manifestPath), true);
         $this->assertIsArray($json);
-        $this->assertEquals('Maju Bersama POS', $json['name']);
+        $this->assertEquals('Sumber Makmur Jaya POS', $json['name']);
         $this->assertEquals('/pos', $json['start_url']);
         $this->assertEquals('standalone', $json['display']);
     }
@@ -29,7 +29,7 @@ class PosPwaTest extends TestCase
         $this->assertFileExists($swPath);
 
         $content = file_get_contents($swPath);
-        $this->assertStringContainsString('pos-cache-v1', $content);
+        $this->assertStringContainsString('sumber-makmur-jaya-cache-v1', $content);
         $this->assertStringContainsString('/pos', $content);
         $this->assertStringContainsString('dexie', $content);
         $this->assertStringContainsString('event.request.method !== \'GET\'', $content);
@@ -47,7 +47,7 @@ class PosPwaTest extends TestCase
         $response->assertOk();
         $response->assertSee('<link rel="manifest" href="/manifest.json">', false);
         $response->assertSee('dexie@3.2.4/dist/dexie.min.js', false);
-        $response->assertSee('window.posDB = new Dexie(\'MajuBersamaPOS\');', false);
+        $response->assertSee('window.posDB = new Dexie(\'Sumber Makmur Jaya POS\');', false);
         $response->assertSee('sync_queue', false);
         $response->assertSee('navigator.serviceWorker.register(\'/sw.js\')', false);
     }

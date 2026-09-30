@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Jalan #{{ $stockTransfer->reference_number }} | MAJU BERSAMA GRUP</title>
+    <title>Surat Jalan #{{ $stockTransfer->reference_number }} | Sumber Makmur Jaya GRUP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @page {
@@ -60,7 +60,7 @@
             <div class="flex items-center justify-between">
                 <div class="text-left">
                     <h1 class="text-base sm:text-lg font-black uppercase tracking-wider text-black leading-tight">
-                        MAJU BERSAMA GRUP
+                        Sumber Makmur Jaya GRUP
                     </h1>
                     <p class="text-[11px] font-semibold text-black leading-tight">
                         Jl. Nusa Indah Ujung BK 9, OKU Timur, Belitang, Sumatera Selatan
@@ -221,7 +221,7 @@
         <!-- IDENTITAS APLIKASI (FOOTER PALING BAWAH) -->
         <div class="mt-1 flex items-center justify-between text-[9px] text-black">
             <span>* Dokumen fisik resmi kurir logistik antar cabang</span>
-            <span class="font-semibold text-right">maju bersama abi - 2029 | supported by rocellgadget</span>
+            <span class="font-semibold text-right">Sumber Makmur Jaya abi - 2029 | supported by rocellgadget</span>
         </div>
 
     </div>

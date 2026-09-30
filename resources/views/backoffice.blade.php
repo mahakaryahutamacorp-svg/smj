@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backoffice | Maju Bersama ERP</title>
+    <title>Backoffice | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>[x-cloak] { display: none !important; }</style>
@@ -13,7 +13,7 @@
         <aside class="border-b border-slate-800 bg-slate-950 text-white lg:min-h-screen lg:w-72 lg:border-b-0 lg:border-r">
             <div class="flex items-center justify-between px-6 py-5 lg:block">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.26em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.26em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <p class="mt-1 text-xl font-bold tracking-tight">Backoffice</p>
                 </a>
                 <button type="button" @click="mobileMenu = !mobileMenu" class="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 lg:hidden">Menu</button>

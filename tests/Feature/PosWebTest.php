@@ -100,7 +100,7 @@ class PosWebTest extends TestCase
         $response = $this->actingAs($this->cashier)->get("/pos/receipt/{$sale->receipt_number}?cash=50000&change=20000");
 
         $response->assertStatus(200);
-        $response->assertSee('MAJU BERSAMA');
+        $response->assertSee('SUMBER MAKMUR JAYA');
         $response->assertSee('Toko Cabang Utama');
         $response->assertSee('Siti Kasir');
         $response->assertSee('INV-20260916-0099');

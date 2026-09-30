@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transfer Stok (Stock Transfer) | Maju Bersama POS &amp; Akuntansi</title>
+    <title>Transfer Stok (Stock Transfer) | Sumber Makmur Jaya POS &amp; Akuntansi</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -19,7 +19,7 @@
     <header class="border-b border-slate-800 bg-slate-950 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
             <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                 <h1 class="mt-1 text-2xl font-bold tracking-tight">Transfer Stok (Stock Transfer)</h1>
             </div>
             <div class="flex items-center gap-4">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratinjau Sistem | Maju Bersama POS &amp; Akuntansi</title>
+    <title>Pratinjau Sistem | Sumber Makmur Jaya POS &amp; Akuntansi</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
@@ -11,7 +11,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Platform POS &amp; Akuntansi</p>
-                <h1 class="mt-1 text-2xl font-bold tracking-tight">Maju Bersama ERP</h1>
+                <h1 class="mt-1 text-2xl font-bold tracking-tight">Sumber Makmur Jaya ERP</h1>
             </div>
             <nav class="flex items-center gap-4 text-sm text-slate-300">
                 <a href="/pos" class="hover:text-white">Kasir (POS)</a>

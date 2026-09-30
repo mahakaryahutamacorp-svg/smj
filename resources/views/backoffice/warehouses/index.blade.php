@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Gudang | Maju Bersama ERP</title>
-    <meta name="description" content="Kelola daftar gudang persediaan per cabang pada sistem Maju Bersama ERP.">
+    <title>Manajemen Gudang | Sumber Makmur Jaya ERP</title>
+    <meta name="description" content="Kelola daftar gudang persediaan per cabang pada sistem Sumber Makmur Jaya ERP.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -15,7 +15,7 @@
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Multi Gudang</h1>
                 </a>
             </div>

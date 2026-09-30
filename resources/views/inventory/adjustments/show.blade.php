@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bukti Penyesuaian Stok #{{ $adjustment->reference_number }} | Maju Bersama ERP</title>
+    <title>Bukti Penyesuaian Stok #{{ $adjustment->reference_number }} | Sumber Makmur Jaya ERP</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media print {
@@ -19,7 +19,7 @@
         <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
             <div class="flex items-center gap-4">
                 <a href="/backoffice" class="block">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Maju Bersama ERP</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-amber-400">Sumber Makmur Jaya ERP</p>
                     <h1 class="text-xl font-bold tracking-tight">Bukti Berita Acara Opname</h1>
                 </a>
             </div>

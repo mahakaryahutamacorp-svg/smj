@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pos-cache-v1';
+const CACHE_NAME = 'sumber-makmur-jaya-cache-v1';
 const PRECACHE_URLS = [
     '/pos',
     '/manifest.json',
