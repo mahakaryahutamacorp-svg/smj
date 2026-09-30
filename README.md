@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Maju Bersama POS & ERP
+# Sumber Makmur Jaya (SMJ) POS & ERP
 
 Fondasi backend Laravel untuk POS dan akuntansi double-entry multi-cabang.
 
