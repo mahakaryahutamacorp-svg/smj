@@ -13,7 +13,7 @@ class BranchAccessSeeder extends Seeder
         $centralBranch = Branch::query()->whereNull('parent_id')->firstOrFail();
 
         User::updateOrCreate(
-            ['email' => 'admin@pusat.test'],
+            ['email' => 'admin@sumbermakmurjaya.store'],
             [
                 'branch_id' => $centralBranch->id,
                 'name' => 'Admin Pusat',
@@ -23,7 +23,7 @@ class BranchAccessSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'master@majubersama.test'],
+            ['email' => 'master@sumbermakmurjaya.store'],
             [
                 'branch_id' => $centralBranch->id,
                 'name' => 'Master Backoffice',
@@ -34,10 +34,10 @@ class BranchAccessSeeder extends Seeder
 
         foreach ($centralBranch->children()->orderBy('id')->get() as $index => $branch) {
             User::updateOrCreate(
-                ['email' => 'admin'.($index + 1).'@majubersama.test'],
+                ['email' => 'admin'.($index + 1).'@sumbermakmurjaya.store'],
                 [
                     'branch_id' => $branch->id,
-                    'name' => 'Admin Majubersama '.($index + 1),
+                    'name' => 'Admin SMJ '.($index + 1),
                     'password' => 'password',
                     'role' => 'manager',
                 ],

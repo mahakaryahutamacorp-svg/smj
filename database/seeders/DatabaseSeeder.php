@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
 
         $branchId = DB::table('branches')->insertGetId([
             'code' => 'PUSAT',
-            'name' => 'majubersamapusat',
+            'name' => 'Sumber Makmur Jaya Pusat',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -29,16 +29,16 @@ class DatabaseSeeder extends Seeder
         foreach (range(1, 5) as $number) {
             $childBranchId = DB::table('branches')->insertGetId([
                 'parent_id' => $branchId,
-                'code' => 'MAJUBERSAMA-'.$number,
-                'name' => 'majubersama '.$number,
+                'code' => 'SMJ-'.$number,
+                'name' => 'Sumber Makmur Jaya '.$number,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             User::factory()->create([
                 'branch_id' => $childBranchId,
-                'name' => 'Admin Majubersama '.$number,
-                'email' => 'admin'.$number.'@majubersama.test',
+                'name' => 'Admin SMJ '.$number,
+                'email' => 'admin'.$number.'@sumbermakmurjaya.store',
                 'password' => 'password',
                 'role' => 'manager',
             ]);
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'branch_id' => $branchId,
             'name' => 'Admin Pusat',
-            'email' => 'admin@pusat.test',
+            'email' => 'admin@sumbermakmurjaya.store',
             'role' => 'admin',
         ]);
 
