@@ -75,7 +75,7 @@
                     <label for="email" class="block text-sm font-semibold text-slate-800">
                         Alamat Email (Digunakan untuk Login) <span class="text-rose-500">*</span>
                     </label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Contoh: budi.kasir@majubersama.online" class="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500">
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required placeholder="Contoh: budi.kasir@sumbermakmurjaya.store" class="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500">
                 </div>
 
                 <!-- Password -->

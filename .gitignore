@@ -27,4 +27,8 @@ Thumbs.db
 .cline/
 
 *.zip
+*.tar.gz
+_deploy_temp/
+deploy-*.tar.gz
+
 backend/.env

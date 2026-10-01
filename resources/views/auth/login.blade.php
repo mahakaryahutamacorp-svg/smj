@@ -34,12 +34,12 @@
                 <form method="POST" action="/login" class="mt-8 space-y-5">
                     @csrf
                     <div>
-                        <label for="email" class="text-sm font-semibold text-slate-700">Alamat Email</label>
-                        <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none ring-sky-500 focus:ring-2" placeholder="nama@majubersama.test">
+                        <label for="email" class="text-sm font-semibold text-slate-700">Alamat Email / Pengguna</label>
+                        <input id="email" name="email" type="email" value="{{ old('email') }}" required autofocus class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none ring-sky-500 focus:ring-2" placeholder="Masukkan user">
                     </div>
                     <div>
                         <label for="password" class="text-sm font-semibold text-slate-700">Kata Sandi</label>
-                        <input id="password" name="password" type="password" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none ring-sky-500 focus:ring-2" placeholder="Masukkan kata sandi">
+                        <input id="password" name="password" type="password" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 outline-none ring-sky-500 focus:ring-2" placeholder="Masukkan password">
                     </div>
                     <label class="flex items-center gap-2 text-sm text-slate-500">
                         <input type="checkbox" name="remember" value="1" class="h-4 w-4 rounded border-slate-300 text-sky-600">
