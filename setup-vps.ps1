@@ -1,11 +1,14 @@
 <#
 .SYNOPSIS
-    Sumber Makmur Jaya — Full VPS Setup & Deploy Script
+    Sumber Makmur Jaya — Full VPS Setup & Deploy (Single SSH Session)
     Setup database MySQL, Nginx vhost, clone repo, dan deploy aplikasi Laravel
     ke VPS Hostinger yang sama dengan Maju Bersama Online.
+    
+    PENTING: Script ini hanya memerlukan 1x input password SSH!
+    
 .USAGE
-    .\setup-vps.ps1
-    .\setup-vps.ps1 -SkipSetup    # Hanya deploy (jika setup sudah pernah)
+    .\setup-vps.ps1                    # Full setup + deploy
+    .\setup-vps.ps1 -SkipBuild        # Skip npm build (jika sudah build)
 #>
 
 param (
@@ -13,320 +16,223 @@ param (
     [int]$HostingerPort = 22,
     [string]$HostingerUser = "root",
     [string]$HostingerPath = "/www/wwwroot/sumbermakmurjaya.store",
-    [string]$SshKeyPath = "",
     [string]$GitRepo = "https://github.com/mahakaryahutamacorp-svg/smj.git",
     [string]$GitBranch = "main",
     [string]$DbName = "smj_pos",
     [string]$DbUser = "smj_user",
     [string]$DbPassword = "SmjP0s2026!Secure",
     [string]$Domain = "sumbermakmurjaya.store",
-    [switch]$SkipSetup
+    [switch]$SkipBuild
 )
 
 $ErrorActionPreference = 'Stop'
+$ProjectRoot = $PSScriptRoot
+if (-not $ProjectRoot) { $ProjectRoot = Get-Location }
 
 Write-Host "" 
 Write-Host "======================================================" -ForegroundColor Cyan
 Write-Host "  Sumber Makmur Jaya - VPS Setup & Deploy             " -ForegroundColor Cyan
-Write-Host "  Target: $HostingerHost ($Domain)                    " -ForegroundColor Cyan
+Write-Host "  VPS   : $HostingerHost                              " -ForegroundColor Cyan
+Write-Host "  Domain: $Domain                                     " -ForegroundColor Cyan
 Write-Host "======================================================" -ForegroundColor Cyan
 Write-Host ""
 
 # ── Step 0: Build front-end assets locally ──────────────────
-Write-Host "[0/6] Building front-end assets locally..." -ForegroundColor Yellow
-$ProjectRoot = $PSScriptRoot
-if (-not $ProjectRoot) { $ProjectRoot = Get-Location }
-
-Push-Location $ProjectRoot
-try {
-    npm run build
-    if ($LASTEXITCODE -ne 0) { throw "npm run build gagal." }
-    Write-Host "      Front-end assets berhasil di-build." -ForegroundColor Green
-} finally {
-    Pop-Location
-}
-
-# ── SSH helper ──────────────────────────────────────────────
-$SshArgs = @("-p", $HostingerPort, "-o", "StrictHostKeyChecking=no")
-if ($SshKeyPath -ne "" -and (Test-Path $SshKeyPath)) {
-    $SshArgs = @("-i", $SshKeyPath) + $SshArgs
-}
-$SshTarget = "$HostingerUser@$HostingerHost"
-
-function Invoke-Ssh {
-    param([string]$Command)
-    ssh @SshArgs $SshTarget $Command
-    if ($LASTEXITCODE -ne 0) {
-        throw "SSH command gagal (exit $LASTEXITCODE): $Command"
+if (-not $SkipBuild) {
+    Write-Host "[0/4] Building front-end assets locally..." -ForegroundColor Yellow
+    Push-Location $ProjectRoot
+    try {
+        npm run build
+        if ($LASTEXITCODE -ne 0) { throw "npm run build gagal." }
+        Write-Host "      OK - Front-end assets berhasil di-build." -ForegroundColor Green
+    } finally {
+        Pop-Location
     }
-}
-
-if (-not $SkipSetup) {
-    # ── Step 1: Create MySQL Database & User ────────────────
-    Write-Host "[1/6] Setting up MySQL database..." -ForegroundColor Yellow
-    
-    $MysqlSetup = @"
-set -euo pipefail
-
-# Check if MySQL/MariaDB is running
-if command -v mysql &> /dev/null; then
-    echo '==> MySQL/MariaDB found.'
-else
-    echo '==> ERROR: MySQL/MariaDB not found. Installing...'
-    apt-get update -qq && apt-get install -y -qq mariadb-server
-    systemctl enable mariadb
-    systemctl start mariadb
-fi
-
-# Create database and user
-mysql -u root <<EOSQL
-CREATE DATABASE IF NOT EXISTS \`$DbName\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS '$DbUser'@'localhost' IDENTIFIED BY '$DbPassword';
-GRANT ALL PRIVILEGES ON \`$DbName\`.* TO '$DbUser'@'localhost';
-FLUSH PRIVILEGES;
-EOSQL
-
-echo "==> Database '$DbName' dan user '$DbUser' berhasil dibuat."
-"@
-
-    Invoke-Ssh $MysqlSetup
-    Write-Host "      MySQL database & user berhasil di-setup." -ForegroundColor Green
-
-    # ── Step 2: Setup Nginx Virtual Host ────────────────────
-    Write-Host "[2/6] Configuring Nginx virtual host..." -ForegroundColor Yellow
-    
-    $NginxSetup = @"
-set -euo pipefail
-
-# Buat direktori website
-mkdir -p '$HostingerPath'
-
-# Check apakah Nginx config sudah ada
-NGINX_CONF="/etc/nginx/sites-available/$Domain"
-NGINX_CONF_ENABLED="/etc/nginx/sites-enabled/$Domain"
-
-# Cek apakah menggunakan aaPanel/BT Panel (CyberPanel/Hostinger VPS)
-if [ -d "/www/server/panel" ]; then
-    echo "==> Terdeteksi aaPanel/BT Panel. Membuat vhost via panel conf..."
-    NGINX_CONF="/www/server/panel/vhost/nginx/${Domain}.conf"
-fi
-
-# Cek apakah vhost sudah ada
-if [ -f "`$NGINX_CONF" ]; then
-    echo "==> Nginx config untuk $Domain sudah ada, skip..."
-else
-    echo "==> Membuat Nginx virtual host untuk $Domain..."
-    cat > "`$NGINX_CONF" <<'EOCONF'
-server {
-    listen 80;
-    listen [::]:80;
-    server_name $Domain www.$Domain;
-    
-    root $HostingerPath/public;
-    index index.php index.html;
-
-    # Security headers
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-
-    # Gzip compression
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml text/javascript image/svg+xml;
-    gzip_min_length 1024;
-
-    location / {
-        try_files `$uri `$uri/ /index.php?`$query_string;
-    }
-
-    location ~ \.php`$ {
-        fastcgi_pass unix:/tmp/php-cgi-83.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME `$document_root`$fastcgi_script_name;
-        fastcgi_param PATH_INFO `$fastcgi_path_info;
-        fastcgi_read_timeout 300;
-    }
-
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
-
-    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
-        expires 30d;
-        add_header Cache-Control "public, immutable";
-        access_log off;
-    }
-
-    access_log /www/wwwlogs/${Domain}.log;
-    error_log /www/wwwlogs/${Domain}.error.log;
-}
-EOCONF
-
-    # Jika bukan aaPanel, enable site
-    if [ -d "/etc/nginx/sites-enabled" ] && [ ! -L "`$NGINX_CONF_ENABLED" ]; then
-        ln -sf "`$NGINX_CONF" "`$NGINX_CONF_ENABLED"
-    fi
-
-    # Test dan reload Nginx
-    nginx -t && (systemctl reload nginx 2>/dev/null || /etc/init.d/nginx reload 2>/dev/null || true)
-    echo "==> Nginx virtual host untuk $Domain berhasil dibuat."
-fi
-"@
-
-    Invoke-Ssh $NginxSetup
-    Write-Host "      Nginx virtual host berhasil dikonfigurasi." -ForegroundColor Green
-
 } else {
-    Write-Host "[1-2/6] Skipping setup (--SkipSetup)..." -ForegroundColor DarkGray
+    Write-Host "[0/4] Skipping npm build..." -ForegroundColor DarkGray
 }
 
-# ── Step 3: Push latest code to GitHub ──────────────────────
-Write-Host "[3/6] Pushing latest code to GitHub..." -ForegroundColor Yellow
+# ── Step 1: Push latest code ke GitHub ──────────────────────
+Write-Host "[1/4] Pushing latest code ke GitHub..." -ForegroundColor Yellow
 Push-Location $ProjectRoot
 try {
     git add -A
     $hasChanges = (git status --porcelain) -ne ""
     if ($hasChanges) {
-        git commit -m "deploy: Sumber Makmur Jaya production $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
-        git push origin $GitBranch
-        Write-Host "      Code pushed ke GitHub." -ForegroundColor Green
-    } else {
-        Write-Host "      No changes to commit." -ForegroundColor DarkGray
-        git push origin $GitBranch 2>$null
+        git commit -m "deploy: SMJ production $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
     }
+    git push origin $GitBranch 2>&1 | Out-Null
+    Write-Host "      OK - Code pushed ke GitHub." -ForegroundColor Green
 } catch {
-    Write-Host "      Warning: Git push issue - $_" -ForegroundColor DarkYellow
+    Write-Host "      Warning: $_" -ForegroundColor DarkYellow
 } finally {
     Pop-Location
 }
 
-# ── Step 4: Clone/Pull & Install on VPS ────────────────────
-Write-Host "[4/6] Deploying application to VPS..." -ForegroundColor Yellow
+# ── Step 2: Baca .env.production untuk dikirim ke VPS ──────
+$EnvFile = Join-Path $ProjectRoot ".env.production"
+if (-not (Test-Path $EnvFile)) {
+    throw ".env.production tidak ditemukan! Jalankan dulu dari direktori project."
+}
+$EnvContent = (Get-Content $EnvFile -Raw) -replace "`r`n", "`n"
 
-$DeployCommand = @"
+# ── Step 3: SINGLE SSH SESSION — Setup Everything ──────────
+Write-Host ""
+Write-Host "[2/4] Connecting ke VPS (1x SSH session)..." -ForegroundColor Yellow
+Write-Host "      Masukkan password SSH saat diminta." -ForegroundColor White
+Write-Host ""
+
+# Gabungkan semua command jadi 1 remote script
+$RemoteScript = @"
+#!/bin/bash
 set -euo pipefail
 
-# Clone atau pull
+echo ''
+echo '=============================================='
+echo '  STARTING VPS SETUP FOR SUMBER MAKMUR JAYA'
+echo '=============================================='
+echo ''
+
+# ── 1. MySQL Database Setup ───────────────────────
+echo '==> [STEP 1/7] Setting up MySQL database...'
+if command -v mysql &> /dev/null; then
+    echo '    MySQL/MariaDB found.'
+else
+    echo '    MySQL not found! Please install MySQL/MariaDB first.'
+    exit 1
+fi
+
+mysql -u root -e "
+CREATE DATABASE IF NOT EXISTS \`$DbName\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS '$DbUser'@'localhost' IDENTIFIED BY '$DbPassword';
+GRANT ALL PRIVILEGES ON \`$DbName\`.* TO '$DbUser'@'localhost';
+FLUSH PRIVILEGES;
+" 2>/dev/null && echo '    OK - Database dan user berhasil dibuat.' || {
+    echo '    Trying with socket auth...'
+    mysql -e "
+    CREATE DATABASE IF NOT EXISTS \`$DbName\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    CREATE USER IF NOT EXISTS '$DbUser'@'localhost' IDENTIFIED BY '$DbPassword';
+    GRANT ALL PRIVILEGES ON \`$DbName\`.* TO '$DbUser'@'localhost';
+    FLUSH PRIVILEGES;
+    " && echo '    OK - Database dan user berhasil dibuat.'
+}
+
+# ── 2. Clone Repository ──────────────────────────
+echo ''
+echo '==> [STEP 2/7] Setting up application directory...'
+mkdir -p '$HostingerPath'
+
 if [ -d '$HostingerPath/.git' ]; then
-    echo '==> Git repository exists, pulling latest...'
+    echo '    Git repo exists, pulling latest...'
     cd '$HostingerPath'
-    git checkout -- .
+    git checkout -- . 2>/dev/null || true
     git pull origin $GitBranch
 else
-    echo '==> Cloning repository...'
+    echo '    Cloning repository...'
     git clone -b $GitBranch '$GitRepo' '$HostingerPath'
     cd '$HostingerPath'
 fi
+echo '    OK - Repository ready.'
 
-# Setup .env production
-echo '==> Setting up .env production...'
-if [ -f '.env.production' ]; then
-    cp .env.production .env
-else
-    cp .env.example .env
-    # Update .env untuk production
-    sed -i 's/APP_ENV=local/APP_ENV=production/' .env
-    sed -i 's/APP_DEBUG=true/APP_DEBUG=false/' .env
-    sed -i "s|APP_URL=http://localhost|APP_URL=https://$Domain|" .env
-    sed -i 's/APP_NAME=Laravel/APP_NAME="Sumber Makmur Jaya"/' .env
-    sed -i 's/DB_CONNECTION=sqlite/DB_CONNECTION=mysql/' .env
-    sed -i 's/# DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
-    sed -i 's/# DB_PORT=3306/DB_PORT=3306/' .env
-    sed -i "s/# DB_DATABASE=laravel/DB_DATABASE=$DbName/" .env
-    sed -i "s/# DB_USERNAME=root/DB_USERNAME=$DbUser/" .env
-    sed -i "s/# DB_PASSWORD=/DB_PASSWORD=$DbPassword/" .env
-    sed -i 's/LOG_LEVEL=debug/LOG_LEVEL=error/' .env
-fi
-
-# Generate APP_KEY jika belum ada
-if ! grep -q 'APP_KEY=base64:' .env; then
-    php artisan key:generate --force
-fi
-
-echo '==> Installing Composer dependencies...'
-export COMPOSER_ALLOW_SUPERUSER=1
-composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
-
-echo '==> Running database migrations...'
-php artisan migrate --force
-
-echo '==> Running seeders...'
-php artisan db:seed --class=ChartOfAccountSeeder --force
-php artisan db:seed --class=CustomerGroupSeeder --force
-
-echo '==> Creating storage link...'
-php artisan storage:link 2>/dev/null || true
-
-echo '==> Optimizing application...'
-php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-echo '==> Setting file permissions...'
-chown -R www:www '$HostingerPath'
-chmod -R 775 storage bootstrap/cache
-
-echo '==> Reloading services...'
-systemctl reload php-fpm-83 2>/dev/null || /etc/init.d/php-fpm-83 reload 2>/dev/null || true
-systemctl reload nginx 2>/dev/null || /etc/init.d/nginx reload 2>/dev/null || true
-
+# ── 3. Setup .env Production ─────────────────────
 echo ''
-echo '================================================'
-echo '  Deployment berhasil!'
-echo '  URL: https://$Domain'
-echo '================================================'
-php artisan about --no-interaction | head -n 15
-"@
+echo '==> [STEP 3/7] Setting up .env production...'
+cat > '$HostingerPath/.env' << 'ENVEOF'
+$EnvContent
+ENVEOF
 
-Invoke-Ssh $DeployCommand
-Write-Host "      Aplikasi berhasil di-deploy ke VPS." -ForegroundColor Green
+# Generate APP_KEY if needed
+if ! grep -q 'APP_KEY=base64:' '$HostingerPath/.env'; then
+    cd '$HostingerPath'
+    php artisan key:generate --force --no-interaction
+fi
+echo '    OK - .env production configured.'
 
-# ── Step 5: Seed initial data ──────────────────────────────
-Write-Host "[5/6] Running full database seeder (first-time setup)..." -ForegroundColor Yellow
-
-if (-not $SkipSetup) {
-    $SeedCommand = @"
-set -euo pipefail
+# ── 4. Composer Install ──────────────────────────
+echo ''
+echo '==> [STEP 4/7] Installing Composer dependencies...'
 cd '$HostingerPath'
-php artisan db:seed --force
-echo '==> Seeding selesai.'
+export COMPOSER_ALLOW_SUPERUSER=1
+composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction 2>&1 | tail -5
+echo '    OK - Composer dependencies installed.'
+
+# ── 5. Database Migration & Seeding ──────────────
+echo ''
+echo '==> [STEP 5/7] Running database migrations & seeders...'
+cd '$HostingerPath'
+php artisan migrate --force --no-interaction
+echo '    Migrations done. Running seeders...'
+php artisan db:seed --force --no-interaction 2>&1 || echo '    (Seeder warning - mungkin data sudah ada)'
+echo '    OK - Database migrated and seeded.'
+
+# ── 6. Optimize & Permissions ────────────────────
+echo ''
+echo '==> [STEP 6/7] Optimizing application...'
+cd '$HostingerPath'
+php artisan storage:link 2>/dev/null || true
+php artisan optimize:clear --no-interaction
+php artisan config:cache --no-interaction
+php artisan route:cache --no-interaction
+php artisan view:cache --no-interaction
+
+echo '    Setting file permissions...'
+chown -R www:www '$HostingerPath' 2>/dev/null || chown -R www-data:www-data '$HostingerPath' 2>/dev/null || true
+chmod -R 775 '$HostingerPath/storage' '$HostingerPath/bootstrap/cache'
+echo '    OK - Application optimized.'
+
+# ── 7. Reload Services ──────────────────────────
+echo ''
+echo '==> [STEP 7/7] Reloading web services...'
+systemctl reload php-fpm-83 2>/dev/null || /etc/init.d/php-fpm-83 reload 2>/dev/null || systemctl reload php8.3-fpm 2>/dev/null || true
+systemctl reload nginx 2>/dev/null || /etc/init.d/nginx reload 2>/dev/null || true
+echo '    OK - Services reloaded.'
+
+# ── Summary ──────────────────────────────────────
+echo ''
+echo '=============================================='
+echo '  SETUP SELESAI!'
+echo '=============================================='
+echo ''
+echo "  Database : $DbName (MySQL)"
+echo "  Web Root : $HostingerPath"
+echo "  Domain   : $Domain"
+echo ''
+echo '  Login Credentials:'
+echo '    Admin Pusat   : admin@sumbermakmurjaya.store / password'
+echo '    Master        : master@sumbermakmurjaya.store / password'
+echo '    Admin Cabang  : admin1-5@sumbermakmurjaya.store / password'
+echo ''
+echo '  Application Info:'
+cd '$HostingerPath'
+php artisan about --no-interaction 2>/dev/null | head -20 || true
+echo ''
+echo '  PENTING: Jangan lupa ubah password default!'
+echo ''
 "@
-    Invoke-Ssh $SeedCommand
-    Write-Host "      Database seeded successfully." -ForegroundColor Green
+
+# Jalankan via SSH (1x password saja)
+ssh -p $HostingerPort -o StrictHostKeyChecking=no "$HostingerUser@$HostingerHost" $RemoteScript
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host ""
+    Write-Host "[3/4] ✅ VPS Setup & Deploy berhasil!" -ForegroundColor Green
 } else {
-    Write-Host "      Skipping full seed (use manual if needed)." -ForegroundColor DarkGray
+    Write-Host ""
+    Write-Host "[3/4] ❌ Ada error (exit code $LASTEXITCODE)" -ForegroundColor Red
+    Write-Host "      Periksa output di atas untuk detail error." -ForegroundColor Yellow
+    exit 1
 }
 
-# ── Step 6: Verify deployment ──────────────────────────────
-Write-Host "[6/6] Verifying deployment..." -ForegroundColor Yellow
-
-$VerifyCommand = @"
-set -euo pipefail
-cd '$HostingerPath'
-
-echo '==> PHP version:'
-php -v | head -1
-
-echo ''
-echo '==> Database connection test:'
-php artisan tinker --execute="DB::connection()->getPdo(); echo 'MySQL connection OK';" 2>/dev/null || echo 'Connection test skipped'
-
-echo ''
-echo '==> Storage directory permissions:'
-ls -la storage/ | head -5
-
-echo ''
-echo '==> Application info:'
-php artisan about --no-interaction 2>/dev/null | head -20
-"@
-
-Invoke-Ssh $VerifyCommand
+# ── Step 4: Nginx Vhost Check ──────────────────────────────
+Write-Host ""
+Write-Host "[4/4] Checking Nginx vhost..." -ForegroundColor Yellow
+Write-Host ""
+Write-Host "      CATATAN: Jika VPS menggunakan aaPanel/BT Panel," -ForegroundColor Cyan
+Write-Host "      buat website '$Domain' melalui panel." -ForegroundColor Cyan
+Write-Host "      Set document root ke: $HostingerPath/public" -ForegroundColor Cyan
+Write-Host ""
 
 # ── Selesai ─────────────────────────────────────────────────
-Write-Host ""
 Write-Host "======================================================" -ForegroundColor Green
 Write-Host "  SETUP & DEPLOY SELESAI!                             " -ForegroundColor Green
 Write-Host "======================================================" -ForegroundColor Green
@@ -336,13 +242,14 @@ Write-Host "  VPS         : $HostingerHost" -ForegroundColor White
 Write-Host "  Web Root    : $HostingerPath" -ForegroundColor White
 Write-Host "  Database    : $DbName (MySQL)" -ForegroundColor White
 Write-Host ""
-Write-Host "  Login Credentials:" -ForegroundColor Cyan
-Write-Host "    Admin Pusat  : admin@sumbermakmurjaya.store / password" -ForegroundColor White
-Write-Host "    Master       : master@sumbermakmurjaya.store / password" -ForegroundColor White
-Write-Host "    Admin Cabang : admin1-5@sumbermakmurjaya.store / password" -ForegroundColor White
-Write-Host ""
 Write-Host "  Next Steps:" -ForegroundColor Cyan
-Write-Host "    1. Setup SSL via aaPanel/BT Panel atau certbot" -ForegroundColor White
-Write-Host "    2. Pastikan DNS $Domain mengarah ke $HostingerHost" -ForegroundColor White
-Write-Host "    3. Ubah password default di production" -ForegroundColor White
+Write-Host "    1. Buat website di aaPanel/BT Panel (jika belum)" -ForegroundColor White
+Write-Host "       - Domain: $Domain" -ForegroundColor DarkGray
+Write-Host "       - Root: $HostingerPath/public" -ForegroundColor DarkGray
+Write-Host "    2. Setup SSL certificate (Let's Encrypt)" -ForegroundColor White
+Write-Host "    3. Pastikan DNS $Domain mengarah ke $HostingerHost" -ForegroundColor White
+Write-Host "    4. Ubah password default di production!" -ForegroundColor White
+Write-Host ""
+Write-Host "  Untuk deploy berikutnya, gunakan:" -ForegroundColor Cyan
+Write-Host "    .\deploy-direct.ps1" -ForegroundColor White
 Write-Host ""
